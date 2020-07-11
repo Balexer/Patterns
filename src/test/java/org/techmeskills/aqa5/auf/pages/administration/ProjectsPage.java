@@ -1,14 +1,24 @@
 package org.techmeskills.aqa5.auf.pages.administration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.techmeskills.aqa5.auf.baseEntity.BasePage;
+import org.techmeskills.aqa5.auf.baseEntity.BasePageFactory;
 import org.techmeskills.aqa5.auf.core.BrowsersService;
 import org.techmeskills.aqa5.auf.elements.UIElement;
 
-public class ProjectsPage extends BasePage {
-    protected By confirmationYesCheckboxSelector = By.cssSelector("#dialog-ident-deleteDialog input");
-    protected By confirmationOkButtonSelector = By.cssSelector("#dialog-ident-deleteDialog .button-ok");
-    protected By messageSuccessSelector = By.className("message-success");
+public class ProjectsPage extends BasePageFactory {
+
+    @FindBy(css = "#dialog-ident-deleteDialog input")
+    public WebElement confirmationYesCheckboxField;
+
+    @FindBy(css = "#dialog-ident-deleteDialog .button-ok")
+    public WebElement confirmationOkButtonField;
+
+    @FindBy(className = "message-success")
+    public WebElement messageSuccessField;
+
 
     public ProjectsPage(BrowsersService browsersService, boolean openPageByUrl) {
         super(browsersService, openPageByUrl);
@@ -32,14 +42,4 @@ public class ProjectsPage extends BasePage {
         UIElement parent = element.getParent().getParent();
         return parent.findElement(By.className("icon-small-delete"));
     }
-
-    public UIElement getConfirmationYesCheckbox() {
-        return new UIElement(browsersService, confirmationYesCheckboxSelector);
-    }
-
-    public UIElement getConfirmationOkButton() {
-        return new UIElement(browsersService, confirmationOkButtonSelector);
-    }
-
-    public String getMessageSuccessText() { return new UIElement(browsersService, messageSuccessSelector).getText(); }
 }

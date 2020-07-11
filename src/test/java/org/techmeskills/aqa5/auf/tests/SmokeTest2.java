@@ -1,6 +1,7 @@
 package org.techmeskills.aqa5.auf.tests;
 
 import org.techmeskills.aqa5.auf.baseEntity.BaseTest;
+import org.techmeskills.aqa5.auf.models.User;
 import org.techmeskills.aqa5.auf.pages.administration.ProjectsPage;
 import org.techmeskills.aqa5.auf.steps.AdministrationStep;
 import org.techmeskills.aqa5.auf.steps.LoginStep;
@@ -11,8 +12,12 @@ import org.testng.annotations.Test;
 public class SmokeTest2 extends BaseTest {
     @Test
     public void login() {
+        User user = new User.Builder()
+                .withUsername("atrostyanko+master@gmail.com")
+                .withPassword("QqtRK9elseEfAk6ilYcJ")
+                .Build();
         LoginStep loginStep = new LoginStep(browsersService);
-        loginStep.login("atrostyanko+master@gmail.com", "QqtRK9elseEfAk6ilYcJ");
+        loginStep.login(user);
     }
 
     @Test(dependsOnMethods = "login")
@@ -30,6 +35,6 @@ public class SmokeTest2 extends BaseTest {
         administrationStep.deleteProject("PR02");
 
         ProjectsPage projectsPage = new ProjectsPage(browsersService, false);
-        Assert.assertEquals(projectsPage.getMessageSuccessText(), "Successfully deleted the project.");
+        Assert.assertEquals(projectsPage.messageSuccessField, "Successfully deleted the project.");
     }
 }
